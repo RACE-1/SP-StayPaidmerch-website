@@ -287,13 +287,25 @@ Status: 100% Value Transparency Verified.`;
               onComplete: () => {
                 gsap.to(preloaderRef.current, {
                   opacity: 0,
-                  duration: 0.7,
+                  scale: 1.04,
+                  duration: 0.8,
                   ease: 'power3.inOut',
                   onComplete: () => setIsLoading(false)
                 });
               }
             });
 
+            // Walking cycle: step bobbing and lateral weight shift
+            gsap.to(mascotPreloadRef.current, {
+              y: -12,
+              rotation: 3,
+              duration: 0.32,
+              repeat: 5,
+              yoyo: true,
+              ease: 'sine.inOut'
+            });
+
+            // Forward stride: fades in & scales forward from 80% to 100%
             preloaderTl
               .fromTo(
                 mascotPreloadRef.current,
@@ -301,15 +313,10 @@ Status: 100% Value Transparency Verified.`;
                 {
                   opacity: 1,
                   scale: 1,
-                  duration: 1.4,
+                  duration: 1.6,
                   ease: 'power2.out'
                 }
-              )
-              .to(mascotPreloadRef.current, {
-                scale: 1.02,
-                duration: 0.3,
-                ease: 'power1.inOut'
-              });
+              );
           }
 
           ScrollTrigger.create({
@@ -401,37 +408,37 @@ Status: 100% Value Transparency Verified.`;
 
       return (
         <div ref={containerRef} className="relative bg-[#0D0D12] text-[#FAF8F5] min-h-screen">
-          {/* PRELOADER — Mascot fades in from 80% to 100% on load */}
+          {/* PRELOADER — White background, walking mascot with arms wide open, fading in from 80% to 100% */}
           {isLoading && (
             <div
               ref={preloaderRef}
-              className="fixed inset-0 z-[99999] bg-[#0D0D12] flex flex-col items-center justify-center pointer-events-auto select-none"
+              className="fixed inset-0 z-[99999] bg-white flex flex-col items-center justify-center pointer-events-auto select-none transition-colors"
             >
-              {/* Ambient Golden Radial Glow Spotlight */}
-              <div className="absolute w-80 h-80 rounded-full bg-gradient-to-tr from-[#C9A84C]/25 via-[#F2A435]/15 to-transparent blur-3xl pointer-events-none" />
+              {/* Subtle Studio Floor Lighting */}
+              <div className="absolute w-[32rem] h-[32rem] rounded-full bg-gradient-to-tr from-amber-50/50 via-orange-50/30 to-transparent blur-3xl pointer-events-none" />
 
-              {/* Mascot Figure Container */}
+              {/* Mascot Figure Container — Walking with arms wide open */}
               <div
                 ref={mascotPreloadRef}
                 className="relative z-10 flex flex-col items-center"
                 style={{ opacity: 0.8, transform: 'scale(0.8)' }}
               >
                 <img
-                  src="mascot-transparent.png"
-                  alt="StayPaid Mascot"
-                  className="w-40 sm:w-48 md:w-56 h-auto object-contain filter drop-shadow-[0_15px_35px_rgba(201,168,76,0.4)]"
+                  src="mascot-walk.jpg"
+                  alt="StayPaid Mascot Walking with Arms Wide Open"
+                  className="w-60 sm:w-72 md:w-80 h-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.12)]"
                 />
               </div>
 
               {/* Loading Progress Bar & Counter (80% -> 100%) */}
-              <div className="relative z-10 mt-8 flex flex-col items-center space-y-2.5">
-                <div className="w-36 h-[2px] bg-white/10 rounded-full overflow-hidden">
+              <div className="relative z-10 mt-6 flex flex-col items-center space-y-2.5">
+                <div className="w-44 h-[3px] bg-neutral-200 rounded-full overflow-hidden shadow-inner">
                   <div
-                    className="h-full bg-gradient-to-r from-[#C9A84C] to-[#FAF8F5] transition-all duration-150"
+                    className="h-full bg-gradient-to-r from-[#0D0D12] via-[#C9A84C] to-[#E67E22] transition-all duration-150 rounded-full"
                     style={{ width: `${loadProgress}%` }}
                   />
                 </div>
-                <div className="flex items-center space-x-2 font-mono text-[11px] tracking-widest text-[#FAF8F5]/60 uppercase">
+                <div className="flex items-center space-x-2 font-mono text-[11px] tracking-widest text-[#0D0D12]/75 uppercase font-semibold">
                   <span>STAYPAID ATELIER //</span>
                   <span className="text-[#C9A84C] font-bold">{loadProgress}%</span>
                 </div>
