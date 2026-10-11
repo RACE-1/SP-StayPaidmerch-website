@@ -335,9 +335,11 @@ Status: 100% Value Transparency Verified.`;
       >
         {/* Brand Logo */}
         <a href="#hero-section" className="flex items-center space-x-2.5 group">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#C9A84C] to-[#FAF8F5] flex items-center justify-center text-[#0D0D12] font-black text-xs shadow-lg group-hover:scale-105 transition-transform duration-300">
-            SP
-          </div>
+          <img
+            src="/logo.jpg"
+            alt="StayPaid Logo"
+            className="w-9 h-9 rounded-full object-cover border border-[#C9A84C]/40 shadow-lg group-hover:scale-105 transition-transform duration-300"
+          />
           <div className="flex flex-col">
             <span className="font-sans font-black tracking-tight text-sm uppercase text-white group-hover:text-[#C9A84C] transition-colors">
               STAYPAID
@@ -1072,9 +1074,11 @@ Status: 100% Value Transparency Verified.`;
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-16 border-b border-white/10">
             <div className="md:col-span-2 space-y-4">
               <div className="flex items-center space-x-2.5">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#C9A84C] to-[#FAF8F5] flex items-center justify-center text-[#0D0D12] font-black text-xs">
-                  SP
-                </div>
+                <img
+                  src="/logo.jpg"
+                  alt="StayPaid Logo"
+                  className="w-10 h-10 rounded-full object-cover border border-[#C9A84C]/40 shadow-lg"
+                />
                 <span className="font-sans font-black tracking-tight text-xl uppercase text-white">
                   STAYPAID MERCH
                 </span>
