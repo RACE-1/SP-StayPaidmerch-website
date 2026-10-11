@@ -148,6 +148,11 @@
       const containerRef = useRef(null);
       const heroRef = useRef(null);
       const navbarRef = useRef(null);
+      const preloaderRef = useRef(null);
+      const mascotPreloadRef = useRef(null);
+
+      const [isLoading, setIsLoading] = useState(true);
+      const [loadProgress, setLoadProgress] = useState(80);
 
       const [cart, setCart] = useState([]);
       const [isCartOpen, setIsCartOpen] = useState(false);
@@ -263,7 +268,50 @@ Status: 100% Value Transparency Verified.`;
       }, []);
 
       useEffect(() => {
+        const progressInterval = setInterval(() => {
+          setLoadProgress(prev => {
+            if (prev >= 100) {
+              clearInterval(progressInterval);
+              return 100;
+            }
+            return prev + 2;
+          });
+        }, 110);
+        return () => clearInterval(progressInterval);
+      }, []);
+
+      useEffect(() => {
         const ctx = gsap.context(() => {
+          if (mascotPreloadRef.current && preloaderRef.current) {
+            const preloaderTl = gsap.timeline({
+              onComplete: () => {
+                gsap.to(preloaderRef.current, {
+                  opacity: 0,
+                  duration: 0.7,
+                  ease: 'power3.inOut',
+                  onComplete: () => setIsLoading(false)
+                });
+              }
+            });
+
+            preloaderTl
+              .fromTo(
+                mascotPreloadRef.current,
+                { opacity: 0.8, scale: 0.8 },
+                {
+                  opacity: 1,
+                  scale: 1,
+                  duration: 1.4,
+                  ease: 'power2.out'
+                }
+              )
+              .to(mascotPreloadRef.current, {
+                scale: 1.02,
+                duration: 0.3,
+                ease: 'power1.inOut'
+              });
+          }
+
           ScrollTrigger.create({
             trigger: '#hero-section',
             start: 'top top',
@@ -353,6 +401,44 @@ Status: 100% Value Transparency Verified.`;
 
       return (
         <div ref={containerRef} className="relative bg-[#0D0D12] text-[#FAF8F5] min-h-screen">
+          {/* PRELOADER — Mascot fades in from 80% to 100% on load */}
+          {isLoading && (
+            <div
+              ref={preloaderRef}
+              className="fixed inset-0 z-[99999] bg-[#0D0D12] flex flex-col items-center justify-center pointer-events-auto select-none"
+            >
+              {/* Ambient Golden Radial Glow Spotlight */}
+              <div className="absolute w-80 h-80 rounded-full bg-gradient-to-tr from-[#C9A84C]/25 via-[#F2A435]/15 to-transparent blur-3xl pointer-events-none" />
+
+              {/* Mascot Figure Container */}
+              <div
+                ref={mascotPreloadRef}
+                className="relative z-10 flex flex-col items-center"
+                style={{ opacity: 0.8, transform: 'scale(0.8)' }}
+              >
+                <img
+                  src="mascot-transparent.png"
+                  alt="StayPaid Mascot"
+                  className="w-40 sm:w-48 md:w-56 h-auto object-contain filter drop-shadow-[0_15px_35px_rgba(201,168,76,0.4)]"
+                />
+              </div>
+
+              {/* Loading Progress Bar & Counter (80% -> 100%) */}
+              <div className="relative z-10 mt-8 flex flex-col items-center space-y-2.5">
+                <div className="w-36 h-[2px] bg-white/10 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-[#C9A84C] to-[#FAF8F5] transition-all duration-150"
+                    style={{ width: `${loadProgress}%` }}
+                  />
+                </div>
+                <div className="flex items-center space-x-2 font-mono text-[11px] tracking-widest text-[#FAF8F5]/60 uppercase">
+                  <span>STAYPAID ATELIER //</span>
+                  <span className="text-[#C9A84C] font-bold">{loadProgress}%</span>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* NAVBAR */}
           <header
             ref={navbarRef}
