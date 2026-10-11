@@ -417,8 +417,8 @@ Status: 100% Value Transparency Verified.`;
             <h1 className="hero-title-sans font-sans font-extrabold uppercase text-3xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight text-white/95 leading-[1.05]">
               Streetwear culture meets
             </h1>
-            <div className="hero-title-serif font-serif italic text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[#C9A84C] tracking-tight leading-[0.95] mt-1 filter drop-shadow-[0_15px_25px_rgba(201,168,76,0.15)]">
-              Untouchable Precision.
+            <div className="hero-title-serif font-serif italic text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-[#C9A84C] tracking-tight leading-[0.95] mt-1 filter drop-shadow-[0_15px_25px_rgba(201,168,76,0.15)]">
+              Redefining Modern Luxury.
             </div>
           </div>
 
